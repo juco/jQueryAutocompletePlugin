@@ -702,6 +702,16 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			if ( formatted === false )
 				continue;
 			var li = $("<li/>").html( options.highlight(formatted, term) ).addClass(i%2 == 0 ? "ac_even" : "ac_odd").appendTo(list)[0];
+
+			// Add optional item $.data()
+			if(options.itemData && typeof options.itemData === "function") {
+				var itemData = options.itemData(data[i]);
+				if(typeof itemData !== "object") {
+					throw Error('Invalid item data specified');
+				} else {
+					$(li).data(options.itemData(data[i]));
+				}
+			}
 			$.data(li, "ac_data", data[i]);
 		}
 		listItems = list.find("li");
