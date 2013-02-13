@@ -783,6 +783,10 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		},
 		selected: function() {
 			var selected = listItems && listItems.filter("." + CLASSES.ACTIVE).removeClass(CLASSES.ACTIVE);
+			// Call the itemSelected callback if available
+			if(options.itemSelected && typeof options.itemSelected === "function") {
+				options.itemSelected(selected);
+			}
 			return selected && selected.length && $.data(selected[0], "ac_data");
 		},
 		emptyList: function (){
